@@ -7,11 +7,7 @@ interface messagingProps {}
 
 const Messaging: React.FC<messagingProps> = ({}) => {
   const [{ data }] = useNewMessageSubscription();
-  // const [messages, setMessages] = useState(null);
 
-  //   useEffect(() => {
-  //     // setMessages(data);
-  //   }, [data]);
   console.log(data);
   return (
     <div>
