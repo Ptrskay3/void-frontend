@@ -1,6 +1,7 @@
 import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 import theme from "../theme";
 
+// @ts-ignore
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider resetCSS={true} theme={theme}>

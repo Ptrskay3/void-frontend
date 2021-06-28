@@ -9,7 +9,6 @@ import {
   Exchange,
   fetchExchange,
   stringifyVariables,
-  subscriptionExchange,
 } from "urql";
 import { pipe, tap } from "wonka";
 import {
@@ -26,7 +25,8 @@ import { gql } from "@urql/core";
 import { isServer } from "./isServer";
 // import { createClient as createWSClient } from "graphql-ws";
 // import { SubscriptionClient } from "subscriptions-transport-ws";
-import * as ws from "ws";
+
+// import * as ws from "ws";
 
 const cursorPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {

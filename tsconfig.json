@@ -13,9 +13,7 @@
     "strictNullChecks": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noUnusedLocals": true,
     "noImplicitAny": true,
-    "noUnusedParameters": true,
     "jsx": "preserve"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.js"],
