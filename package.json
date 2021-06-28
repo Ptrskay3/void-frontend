@@ -1,0 +1,89 @@
+{
+  "name": "with-chakra-ui",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "jest",
+    "clear-cache": "jest --clearCache",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "gen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.6",
+    "@chakra-ui/react": "^1.0.0",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@urql/exchange-graphcache": "^4.0.0",
+    "apollo-link-ws": "^1.0.20",
+    "formik": "^2.2.6",
+    "framer-motion": "^2.9.4",
+    "graphql": "^15.5.0",
+    "graphql-ws": "^4.2.2",
+    "isomorphic-unfetch": "^3.1.0",
+    "next": "latest",
+    "next-urql": "^3.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-infinite-scroll-component": "^6.0.0",
+    "react-is": "^17.0.1",
+    "react-katex": "^2.0.2",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.4.3",
+    "react-textarea-autosize": "^8.3.2",
+    "remark-math": "^4.0.0",
+    "subscriptions-transport-ws": "^0.9.18",
+    "urql": "^2.0.1",
+    "ws": "^7.4.4"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "@graphql-codegen/cli": "1.21.1",
+    "@graphql-codegen/typescript": "1.21.0",
+    "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-urql": "^2.0.3",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@types/react-syntax-highlighter": "^13.5.0",
+    "@types/ws": "^7.4.0",
+    "babel-jest": "^26.6.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "ts-jest": "^26.5.3",
+    "typescript": "^4.2.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "tsconfig.jest.json",
+        "diagnostics": {
+          "ignoreCodes": [
+            6133,
+            2740
+          ]
+        }
+      }
+    },
+    "setupFilesAfterEnv": [
+      "./test.setup.ts"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

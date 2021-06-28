@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout Basic regular Wrapper renders 1`] = `
+Array [
+  <Box
+    maxW="800px"
+    mt={8}
+    mx="auto"
+    width="100%"
+  />,
+]
+`;
+
+exports[`Layout Basic small Wrapper renders 1`] = `
+Array [
+  <Box
+    maxW="400px"
+    mt={8}
+    mx="auto"
+    width="100%"
+  />,
+]
+`;

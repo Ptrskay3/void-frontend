@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout Basic regular Layout renders 1`] = `
+Array [
+  <React.Fragment>
+    <NavBar />
+    <Wrapper
+      variant="regular"
+    />
+  </React.Fragment>,
+]
+`;
+
+exports[`Layout Basic small Layout renders 1`] = `
+Array [
+  <React.Fragment>
+    <NavBar />
+    <Wrapper
+      variant="small"
+    />
+  </React.Fragment>,
+]
+`;

@@ -1,0 +1,7 @@
+mutation CreateMessage($message: String!, $postId: Int!) {
+  createMessage(message: $message, postId: $postId) {
+    message
+    creatorId
+    postId
+  }
+}

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout Updoot section loads with post 1`] = `
+Array [
+  <UpdootSection
+    post={
+      Object {
+        "createdAt": "1615645506657",
+        "creator": Object {
+          "id": 2,
+          "username": "ben",
+        },
+        "id": 345,
+        "points": 1,
+        "textSnippet": "",
+        "title": "szia",
+        "updatedAt": "1615645506657",
+        "voteStatus": 1,
+      }
+    }
+  />,
+]
+`;
