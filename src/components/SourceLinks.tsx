@@ -10,5 +10,11 @@ export const SourceLinks = (props: ButtonGroupProps) => (
       aria-label="GitHub"
       icon={<FaGithub fontSize="20px" />}
     />
+    <IconButton
+      as="a"
+      href="https://github.com/Ptrskay3/void-backend"
+      aria-label="GitHub"
+      icon={<FaGithub fontSize="20px" />}
+    />
   </ButtonGroup>
 );
