@@ -1,7 +1,15 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  createStandaloneToast,
+  Flex,
+  Heading,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import NextLink from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { EditDeletePostButtons } from "../components/EditDeletePostButtons";
 import Footer from "../components/Footer";
@@ -10,6 +18,7 @@ import MathInputArea from "../components/MathInputArea";
 import UpdootSection from "../components/UpdootSection";
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import { Spinner } from "@chakra-ui/react";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -21,6 +30,23 @@ const Index = () => {
   });
 
   const [{ data: isThisMeData }] = useMeQuery();
+
+  const toast = createStandaloneToast();
+
+  useEffect(() => {
+    var isFirstView = localStorage.getItem("isFirstView") || "false";
+    if (isFirstView !== "y") {
+      /* Show message to use as this is first view. */
+      localStorage.setItem("isFirstView", "y");
+      toast({
+        title: "Tip",
+        description: "Click on a post's title to see its full content.",
+        status: "info",
+        duration: 10000,
+        isClosable: true,
+      });
+    }
+  }, []);
 
   // TODO: handle more elegantly
   if (!fetching && !data) {
@@ -36,7 +62,16 @@ const Index = () => {
   }
 
   return !data && fetching ? (
-    <div>loading...</div>
+    // TODO
+    <Layout>
+      <Box>
+        <Center>
+          <Text>
+            <Spinner color="black" size="xl" />
+          </Text>
+        </Center>
+      </Box>
+    </Layout>
   ) : (
     <Layout>
       <InfiniteScroll

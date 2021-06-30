@@ -6,6 +6,7 @@ import {
   Heading,
   Link,
   Spacer,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link"; // client-side routing
@@ -19,6 +20,7 @@ import Image from "next/image";
 interface NavBarProps {}
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
+  const [isLargeScreen] = useMediaQuery("(min-width: 500px)");
   const router = useRouter();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({
@@ -79,16 +81,24 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   return (
     <Flex zIndex={1} position="sticky" top={0} bg="black" p="4">
       <Flex flex="1" m="auto" align="center" maxW={800}>
-        <NextLink href="/">
-          <Link>
-            <Image
-              src="/logo_transparent.png"
-              alt="voidphysics"
-              width="170"
-              height="50"
-            />
-          </Link>
-        </NextLink>
+        {isLargeScreen ? (
+          <NextLink href="/">
+            <Link>
+              <Image
+                src="/logo_transparent.png"
+                alt="voidphysics"
+                width="170"
+                height="50"
+              />
+            </Link>
+          </NextLink>
+        ) : (
+          <NextLink href="/">
+            <Link>
+              <Heading color="white">V</Heading>
+            </Link>
+          </NextLink>
+        )}
         <Spacer />
         <Box mr="4" ml="4">
           <WhatIsThis />
