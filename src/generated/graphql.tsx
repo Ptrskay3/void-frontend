@@ -14,65 +14,10 @@ export type Scalars = {
   Float: number;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  hello: Scalars['String'];
-  posts: PaginatedPost;
-  post?: Maybe<Post>;
-  me?: Maybe<User>;
-  users: Array<User>;
-  findMessagesByPostId?: Maybe<Array<Message>>;
-  findMessagesByCreatorId?: Maybe<Array<Message>>;
-};
-
-
-export type QueryPostsArgs = {
-  cursor?: Maybe<Scalars['String']>;
-  limit: Scalars['Int'];
-};
-
-
-export type QueryPostArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type QueryFindMessagesByPostIdArgs = {
-  postId: Scalars['Float'];
-};
-
-
-export type QueryFindMessagesByCreatorIdArgs = {
-  creatorId: Scalars['Float'];
-};
-
-export type PaginatedPost = {
-  __typename?: 'PaginatedPost';
-  posts: Array<Post>;
-  hasMore: Scalars['Boolean'];
-};
-
-export type Post = {
-  __typename?: 'Post';
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  text: Scalars['String'];
-  points: Scalars['Float'];
-  voteStatus?: Maybe<Scalars['Int']>;
-  creatorId: Scalars['Float'];
-  creator: User;
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
-  textSnippet: Scalars['String'];
-};
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['Float'];
-  username: Scalars['String'];
-  email: Scalars['String'];
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
+export type FieldError = {
+  __typename?: 'FieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export type Message = {
@@ -160,26 +105,87 @@ export type MutationDeleteMessageArgs = {
   messageId: Scalars['Float'];
 };
 
+export type PaginatedPost = {
+  __typename?: 'PaginatedPost';
+  posts: Array<Post>;
+  hasMore: Scalars['Boolean'];
+};
+
+export type Post = {
+  __typename?: 'Post';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  text: Scalars['String'];
+  points: Scalars['Float'];
+  voteStatus?: Maybe<Scalars['Int']>;
+  creatorId: Scalars['Float'];
+  creator: User;
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  textSnippet: Scalars['String'];
+};
+
 export type PostInput = {
   title: Scalars['String'];
   text: Scalars['String'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  hello: Scalars['String'];
+  numberOfPosts: Scalars['Int'];
+  posts: PaginatedPost;
+  post?: Maybe<Post>;
+  me?: Maybe<User>;
+  users: Array<User>;
+  findMessagesByPostId?: Maybe<Array<Message>>;
+  findMessagesByCreatorId?: Maybe<Array<Message>>;
+};
+
+
+export type QueryNumberOfPostsArgs = {
+  userid: Scalars['Int'];
+};
+
+
+export type QueryPostsArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
+};
+
+
+export type QueryPostArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryFindMessagesByPostIdArgs = {
+  postId: Scalars['Float'];
+};
+
+
+export type QueryFindMessagesByCreatorIdArgs = {
+  creatorId: Scalars['Float'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newMessage: Message;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Float'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type UserResponse = {
   __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
-};
-
-export type FieldError = {
-  __typename?: 'FieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
-};
-
-export type Subscription = {
-  __typename?: 'Subscription';
-  newMessage: Message;
 };
 
 export type FullUserFragment = (
@@ -350,6 +356,16 @@ export type MeQuery = (
     { __typename?: 'User' }
     & RegularUserFragment
   )> }
+);
+
+export type NumberOfPostsQueryVariables = Exact<{
+  userid: Scalars['Int'];
+}>;
+
+
+export type NumberOfPostsQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'numberOfPosts'>
 );
 
 export type PostQueryVariables = Exact<{
@@ -569,6 +585,15 @@ export const MeDocument = gql`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
+export const NumberOfPostsDocument = gql`
+    query NumberOfPosts($userid: Int!) {
+  numberOfPosts(userid: $userid)
+}
+    `;
+
+export function useNumberOfPostsQuery(options: Omit<Urql.UseQueryArgs<NumberOfPostsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<NumberOfPostsQuery>({ query: NumberOfPostsDocument, ...options });
 };
 export const PostDocument = gql`
     query Post($id: Int!) {

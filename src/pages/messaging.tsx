@@ -5,17 +5,11 @@ import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface messagingProps {}
 
+// TODO
 const Messaging: React.FC<messagingProps> = ({}) => {
   const [{ data }] = useNewMessageSubscription();
 
-  console.log(data);
-  return (
-    <div>
-      {/* {messages?.map((m) => (
-        <div>m</div>
-      ))} */}
-    </div>
-  );
+  return <div>Not implemented</div>;
 };
 
 export default withUrqlClient(createUrqlClient)(Messaging);

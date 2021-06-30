@@ -61,7 +61,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
             <Box mr="2" color="lightgray">
               {isLargeScreen
                 ? data.me.username
-                : data.me.username.slice(0, 5) + "..."}
+                : data.me.username.slice(0, 4) + ".."}
             </Box>
           </Link>
         </NextLink>

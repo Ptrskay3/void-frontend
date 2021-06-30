@@ -8,7 +8,7 @@ import { CardContent } from "../../components/profile/CardContent";
 import { CardHeader } from "../../components/profile/CardHeader";
 import { Property } from "../../components/profile/Property";
 import { HiPencilAlt } from "react-icons/hi";
-import { useMeQuery } from "../../generated/graphql";
+import { useMeQuery, useNumberOfPostsQuery } from "../../generated/graphql";
 import { Layout } from "../../components/Layout";
 
 interface idProps {}
@@ -17,6 +17,11 @@ const idPage: React.FC<idProps> = () => {
   // const router = useRouter();
   // const { id } = router.query;
   const [{ data }] = useMeQuery();
+  const [{ data: numberOfPosts }] = useNumberOfPostsQuery({
+    variables: { userid: data?.me?.id },
+  });
+
+  console.log(numberOfPosts);
 
   if (!data?.me?.username) {
     return <Layout>{"You're not logged in."}</Layout>;
@@ -47,6 +52,10 @@ const idPage: React.FC<idProps> = () => {
           <CardContent>
             <Property label="Name" value={data?.me?.username} />
             <Property label="Email" value={data?.me?.email} />
+            <Property
+              label="Number of posts"
+              value={numberOfPosts?.numberOfPosts as unknown as string}
+            />
           </CardContent>
         </Card>
       </Box>

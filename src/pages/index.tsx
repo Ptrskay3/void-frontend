@@ -34,9 +34,9 @@ const Index = () => {
   const toast = createStandaloneToast();
 
   useEffect(() => {
-    var isFirstView = localStorage.getItem("isFirstView") || "false";
+    var isFirstView = localStorage.getItem("isFirstView") || "";
     if (isFirstView !== "y") {
-      /* Show message to use as this is first view. */
+      /* Show message to user if this is the first view. */
       localStorage.setItem("isFirstView", "y");
       toast({
         title: "Tip",
