@@ -1,9 +1,20 @@
-import { Box, Button, Flex, Heading, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Link,
+  Spacer,
+} from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link"; // client-side routing
 import { useLogoutMutation, useMeQuery } from "../generated/graphql";
 import { isServer } from "../utils/isServer";
 import { useRouter } from "next/router";
+import { WhatIsThis } from "./WhatIsThis";
+import { AddIcon } from "@chakra-ui/icons";
+import Image from "next/image";
 
 interface NavBarProps {}
 
@@ -23,10 +34,14 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     body = (
       <>
         <NextLink href="/login">
-          <Link mr="4">Login</Link>
+          <Link mr="4" color="white">
+            Login
+          </Link>
         </NextLink>
         <NextLink href="/register">
-          <Link mr="4">Register</Link>
+          <Link color="white" mr="4">
+            Register
+          </Link>
         </NextLink>
       </>
     );
@@ -36,10 +51,16 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
       <Flex align="center">
         <NextLink href="/create-post">
           <Button as={Link} mr="4">
-            Create Post
+            <AddIcon /> &nbsp; Create Post
           </Button>
         </NextLink>
-        <Box mr="2">{data.me.username}</Box>
+        <NextLink href="/profile/me">
+          <Link color="white" mr="4">
+            <Box mr="2" color="lightgray">
+              {data.me.username}
+            </Box>
+          </Link>
+        </NextLink>
         <Button
           onClick={async () => {
             await logout();
@@ -47,6 +68,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
           }}
           isLoading={logoutFetching}
           variant="link"
+          color="white"
         >
           Logout
         </Button>
@@ -55,13 +77,22 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex zIndex={1} position="sticky" top={0} bg="tan" p="4">
+    <Flex zIndex={1} position="sticky" top={0} bg="black" p="4">
       <Flex flex="1" m="auto" align="center" maxW={800}>
         <NextLink href="/">
           <Link>
-            <Heading>Void</Heading>
+            <Image
+              src="/logo_transparent.png"
+              alt="voidphysics"
+              width="170"
+              height="50"
+            />
           </Link>
         </NextLink>
+        <Spacer />
+        <Box mr="4" ml="4">
+          <WhatIsThis />
+        </Box>
         <Box ml="auto">{body}</Box>
       </Flex>
     </Flex>
