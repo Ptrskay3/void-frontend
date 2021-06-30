@@ -4,6 +4,7 @@ import NextLink from "next/link";
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { EditDeletePostButtons } from "../components/EditDeletePostButtons";
+import Footer from "../components/Footer";
 import { Layout } from "../components/Layout";
 import MathInputArea from "../components/MathInputArea";
 import UpdootSection from "../components/UpdootSection";
@@ -25,7 +26,10 @@ const Index = () => {
   if (!fetching && !data) {
     return (
       <Layout>
-        <div>Query failed...</div>
+        <div>
+          Query failed... That's probably because you're on
+          https://www.voidphysics.com. Remove the www from url.
+        </div>
         <div>{error?.message}</div>
       </Layout>
     );
@@ -48,7 +52,7 @@ const Index = () => {
         endMessage={
           <p style={{ textAlign: "center" }}>
             <br />
-            <b>We're out of posts, check back later!</b>
+            <b>That was all it, check back later!</b>
           </p>
         }
       >
@@ -83,6 +87,7 @@ const Index = () => {
           )
         )}
       </InfiniteScroll>
+      <Footer></Footer>
     </Layout>
   );
 };

@@ -1,4 +1,11 @@
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Button,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { withUrqlClient } from "next-urql";
 import React, { useState } from "react";
@@ -12,6 +19,12 @@ export const ForgotPassword: React.FC<{}> = ({}) => {
   const [{}, forgotPassword] = useForgotPasswordMutation();
   return (
     <Wrapper variant="small">
+      <Box mb={5} mt={5}>
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>Email sending is currently disabled!</AlertTitle>
+        </Alert>
+      </Box>
       <Formik
         initialValues={{ email: "" }}
         onSubmit={async (values) => {

@@ -45,7 +45,6 @@ const EditPost: React.FC<{}> = ({}) => {
       <Layout>
         <Box>
           Unless you have a time machine, this content is no longer available.
-          Are you sure you have permission to do that?
         </Box>
       </Layout>
     );
