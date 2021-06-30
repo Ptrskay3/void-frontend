@@ -20,7 +20,7 @@ export const WhatIsThis: React.FC<WhatIsThisProps> = ({}) => {
   return (
     <>
       <Button onClick={onOpen}>
-        <QuestionIcon /> &nbsp; What's this?
+        <QuestionIcon /> &nbsp; Help
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
