@@ -59,7 +59,9 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         <NextLink href="/profile/me">
           <Link color="white" mr="4">
             <Box mr="2" color="lightgray">
-              {data.me.username}
+              {isLargeScreen
+                ? data.me.username
+                : data.me.username.slice(0, 5) + "..."}
             </Box>
           </Link>
         </NextLink>
