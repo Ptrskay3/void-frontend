@@ -65,6 +65,31 @@ const Login: React.FC<registerProps> = ({}) => {
           </Form>
         )}
       </Formik>
+      <Box mt={4}>
+        <Button
+          type="submit"
+          colorScheme="teal"
+          onClick={async () => {
+            const response = await login({
+              usernameOrEmail: "user",
+              password: "user",
+            });
+            if (response.data?.login.errors) {
+              // this is unreachable
+            } else if (response.data?.login.user) {
+              if (typeof router.query.next === "string") {
+                router.push(router.query.next);
+              } else {
+                router.push("/");
+              }
+            } else {
+              // unreachable
+            }
+          }}
+        >
+          I'm just testing, give me an account!
+        </Button>
+      </Box>
     </Wrapper>
   );
 };

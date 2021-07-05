@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Wrapper } from "../components/Wrapper";
 import { InputField } from "../components/InputField";
-import { useRegisterMutation } from "../generated/graphql";
+import { useLoginMutation, useRegisterMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
@@ -22,6 +22,7 @@ interface registerProps {}
 const Register: React.FC<registerProps> = ({}) => {
   const router = useRouter();
   const [{}, register] = useRegisterMutation();
+  const [{}, login] = useLoginMutation();
   return (
     <Layout>
       <Wrapper variant="small">
@@ -83,6 +84,31 @@ const Register: React.FC<registerProps> = ({}) => {
             </Form>
           )}
         </Formik>
+        <Box mt={4}>
+          <Button
+            type="submit"
+            colorScheme="teal"
+            onClick={async () => {
+              const response = await login({
+                usernameOrEmail: "user",
+                password: "user",
+              });
+              if (response.data?.login.errors) {
+                // this is unreachable
+              } else if (response.data?.login.user) {
+                if (typeof router.query.next === "string") {
+                  router.push(router.query.next);
+                } else {
+                  router.push("/");
+                }
+              } else {
+                // unreachable
+              }
+            }}
+          >
+            I'm just testing, give me an account!
+          </Button>
+        </Box>
       </Wrapper>
     </Layout>
   );

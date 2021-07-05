@@ -4,12 +4,11 @@ import {
   createStandaloneToast,
   Flex,
   Heading,
-  Link,
-  Text,
+  Link, Spinner, Text
 } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import NextLink from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { EditDeletePostButtons } from "../components/EditDeletePostButtons";
 import Footer from "../components/Footer";
@@ -18,7 +17,6 @@ import MathInputArea from "../components/MathInputArea";
 import UpdootSection from "../components/UpdootSection";
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { Spinner } from "@chakra-ui/react";
 
 const Index = () => {
   const [variables, setVariables] = useState({
