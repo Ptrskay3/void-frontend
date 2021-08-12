@@ -12,8 +12,11 @@ import {
 } from "../../../generated/graphql";
 import { useRouter } from "next/router";
 import MathInputArea from "../../../components/MathInputArea";
+import { useIsAuth } from "../../../utils/useIsAuth";
 
 const EditPost: React.FC<{}> = ({}) => {
+  useIsAuth();
+
   const router = useRouter();
   const intId = useGetIntId();
   const [{ data, fetching }] = usePostQuery({

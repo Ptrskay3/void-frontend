@@ -13,6 +13,7 @@ const Post: React.FC<{}> = ({}) => {
   const [{ data: isThisMeData }] = useMeQuery();
   const [{ data, error, fetching }] = useGetPostFromUrl();
 
+
   if (fetching) {
     return (
       <Layout>
@@ -21,11 +22,7 @@ const Post: React.FC<{}> = ({}) => {
     );
   }
 
-  if (error) {
-    return <Box>{error.message}</Box>;
-  }
-
-  if (!data?.post) {
+  if (!data?.post || error) {
     return (
       <Layout>
         <Box>
