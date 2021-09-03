@@ -4,7 +4,9 @@ import {
   createStandaloneToast,
   Flex,
   Heading,
-  Link, Spinner, Text
+  Link,
+  Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import NextLink from "next/link";
@@ -91,7 +93,14 @@ const Index = () => {
       >
         {data!.posts.posts.map((p) =>
           !p ? null : ( // this handles the deleted post logic
-            <Flex key={p.id} p={5} shadow="md" borderWidth="1px" mb={4}>
+            <Flex
+              key={p.id}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              overflow="scroll"
+              mb={4}
+            >
               <UpdootSection
                 post={p}
                 disableVoting={isThisMeData?.me?.id === p.creator.id}
