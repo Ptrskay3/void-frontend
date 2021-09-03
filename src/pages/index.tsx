@@ -98,7 +98,7 @@ const Index = () => {
               p={5}
               shadow="md"
               borderWidth="1px"
-              overflow="scroll"
+              overflow="hidden"
               mb={4}
             >
               <UpdootSection
