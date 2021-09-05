@@ -21,8 +21,6 @@ const idPage: React.FC<idProps> = () => {
     variables: { userid: data?.me?.id },
   });
 
-  console.log(numberOfPosts);
-
   if (!data?.me?.username) {
     return <Layout>{"You're not logged in."}</Layout>;
   }
