@@ -31,7 +31,7 @@ export const WhatIsThis: React.FC<WhatIsThisProps> = ({}) => {
           <ModalBody>
             <Text>
               {
-                "This is a small web application with basic authentication, a post wall with Markdown and LaTeX integration, also voting. This website was a challange for myself whether I'm capable of creating a fullstack site from scrach to production. Built with: TypeScript, React, Next.js, Node.js, PostgreSQL, Redis, GraphQL, Docker."
+                "This is a small web application with basic authentication, a post wall with Markdown and LaTeX integration, voting and commenting. This website was a challange for myself whether I'm capable of creating a fullstack site from scrach to production. Built with: TypeScript, React, Next.js, Node.js, PostgreSQL, Redis, GraphQL, Docker."
               }
             </Text>
             <Text>
