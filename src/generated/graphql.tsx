@@ -23,13 +23,18 @@ export type FieldError = {
 export type Message = {
   __typename?: 'Message';
   id: Scalars['Int'];
-  message?: Maybe<Scalars['String']>;
-  creatorId: Scalars['Float'];
-  creator: User;
+  text: Scalars['String'];
+  userId: Scalars['Float'];
+  user: User;
   postId: Scalars['Float'];
   post: Post;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+};
+
+export type MessageInput = {
+  text: Scalars['String'];
+  postId: Scalars['Float'];
 };
 
 export type Mutation = {
@@ -96,13 +101,12 @@ export type MutationLoginArgs = {
 
 
 export type MutationCreateMessageArgs = {
-  postId: Scalars['Int'];
-  message: Scalars['String'];
+  input: MessageInput;
 };
 
 
 export type MutationDeleteMessageArgs = {
-  messageId: Scalars['Float'];
+  messageId: Scalars['Int'];
 };
 
 export type PaginatedPost = {
@@ -120,6 +124,7 @@ export type Post = {
   voteStatus?: Maybe<Scalars['Int']>;
   creatorId: Scalars['Float'];
   creator: User;
+  messages?: Maybe<Array<Message>>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   textSnippet: Scalars['String'];
@@ -132,14 +137,14 @@ export type PostInput = {
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
   numberOfPosts: Scalars['Int'];
   posts: PaginatedPost;
   post?: Maybe<Post>;
   me?: Maybe<User>;
   users: Array<User>;
   findMessagesByPostId?: Maybe<Array<Message>>;
-  findMessagesByCreatorId?: Maybe<Array<Message>>;
+  messages?: Maybe<Array<Message>>;
+  findMessagesByUserId?: Maybe<Array<Message>>;
 };
 
 
@@ -164,13 +169,8 @@ export type QueryFindMessagesByPostIdArgs = {
 };
 
 
-export type QueryFindMessagesByCreatorIdArgs = {
-  creatorId: Scalars['Float'];
-};
-
-export type Subscription = {
-  __typename?: 'Subscription';
-  newMessage: Message;
+export type QueryFindMessagesByUserIdArgs = {
+  userId: Scalars['Float'];
 };
 
 export type User = {
@@ -238,8 +238,7 @@ export type ChangePasswordMutation = (
 );
 
 export type CreateMessageMutationVariables = Exact<{
-  message: Scalars['String'];
-  postId: Scalars['Int'];
+  input: MessageInput;
 }>;
 
 
@@ -247,7 +246,7 @@ export type CreateMessageMutation = (
   { __typename?: 'Mutation' }
   & { createMessage: (
     { __typename?: 'Message' }
-    & Pick<Message, 'message' | 'creatorId' | 'postId'>
+    & Pick<Message, 'id' | 'text' | 'createdAt' | 'updatedAt' | 'userId' | 'postId'>
   ) }
 );
 
@@ -262,6 +261,16 @@ export type CreatePostMutation = (
     { __typename?: 'Post' }
     & Pick<Post, 'id' | 'title' | 'createdAt' | 'updatedAt' | 'points' | 'creatorId' | 'text'>
   ) }
+);
+
+export type DeleteMessageMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteMessageMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteMessage'>
 );
 
 export type DeletePostMutationVariables = Exact<{
@@ -381,7 +390,14 @@ export type PostQuery = (
     & { creator: (
       { __typename?: 'User' }
       & Pick<User, 'username' | 'id'>
-    ) }
+    ), messages?: Maybe<Array<(
+      { __typename?: 'Message' }
+      & Pick<Message, 'id' | 'text' | 'createdAt'>
+      & { user: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'username'>
+      ) }
+    )>> }
   )> }
 );
 
@@ -400,17 +416,6 @@ export type PostsQuery = (
       { __typename?: 'Post' }
       & PostSnippetFragment
     )> }
-  ) }
-);
-
-export type NewMessageSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type NewMessageSubscription = (
-  { __typename?: 'Subscription' }
-  & { newMessage: (
-    { __typename?: 'Message' }
-    & Pick<Message, 'message' | 'creatorId' | 'postId'>
   ) }
 );
 
@@ -474,10 +479,13 @@ export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
 };
 export const CreateMessageDocument = gql`
-    mutation CreateMessage($message: String!, $postId: Int!) {
-  createMessage(message: $message, postId: $postId) {
-    message
-    creatorId
+    mutation CreateMessage($input: MessageInput!) {
+  createMessage(input: $input) {
+    id
+    text
+    createdAt
+    updatedAt
+    userId
     postId
   }
 }
@@ -502,6 +510,15 @@ export const CreatePostDocument = gql`
 
 export function useCreatePostMutation() {
   return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
+};
+export const DeleteMessageDocument = gql`
+    mutation DeleteMessage($id: Int!) {
+  deleteMessage(messageId: $id)
+}
+    `;
+
+export function useDeleteMessageMutation() {
+  return Urql.useMutation<DeleteMessageMutation, DeleteMessageMutationVariables>(DeleteMessageDocument);
 };
 export const DeletePostDocument = gql`
     mutation DeletePost($id: Int!) {
@@ -609,6 +626,15 @@ export const PostDocument = gql`
       username
       id
     }
+    messages {
+      id
+      text
+      createdAt
+      user {
+        id
+        username
+      }
+    }
   }
 }
     `;
@@ -629,17 +655,4 @@ export const PostsDocument = gql`
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-};
-export const NewMessageDocument = gql`
-    subscription NewMessage {
-  newMessage {
-    message
-    creatorId
-    postId
-  }
-}
-    `;
-
-export function useNewMessageSubscription<TData = NewMessageSubscription>(options: Omit<Urql.UseSubscriptionArgs<NewMessageSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<NewMessageSubscription, TData>) {
-  return Urql.useSubscription<NewMessageSubscription, TData, NewMessageSubscriptionVariables>({ query: NewMessageDocument, ...options }, handler);
 };

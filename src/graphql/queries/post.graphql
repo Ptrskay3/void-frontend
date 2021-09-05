@@ -11,5 +11,14 @@ query Post($id: Int!) {
       username
       id
     }
+    messages {
+      id
+      text
+      createdAt
+      user {
+        id
+        username
+      }
+    }
   }
 }

@@ -1,7 +1,7 @@
-subscription NewMessage {
-  newMessage {
-    message
-    creatorId
-    postId
-  }
-}
+# subscription NewMessage {
+#   newMessage {
+#     message
+#     creatorId
+#     postId
+#   }
+# }
