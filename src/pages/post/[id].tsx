@@ -66,7 +66,7 @@ const Post: React.FC<{}> = ({}) => {
       <Box mt="2" overflow="hidden">
         <MathInputArea children={data?.post.text} />
       </Box>
-      <Divider mt="2" m="2" />
+      <Divider mt="2" />
 
       {data?.post?.messages.length > 0 ? (
         <Box mt="auto">
