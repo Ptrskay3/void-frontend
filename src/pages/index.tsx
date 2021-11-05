@@ -16,6 +16,7 @@ import { EditDeletePostButtons } from "../components/EditDeletePostButtons";
 import Footer from "../components/Footer";
 import { Layout } from "../components/Layout";
 import MathInputArea from "../components/MathInputArea";
+import { SourceLinks } from "../components/SourceLinks";
 import UpdootSection from "../components/UpdootSection";
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
@@ -48,14 +49,14 @@ const Index = () => {
     }
   }, []);
 
-  // TODO: handle more elegantly
   if (!fetching && !data) {
     return (
       <Layout>
         <div>
-          Query failed... That's probably because you're on
-          https://www.voidphysics.com. Remove the www from url.
+          The GraphQL server is offline for the time being. You might checkout
+          the source if interested.
         </div>
+        <SourceLinks />
         <div>{error?.message}</div>
       </Layout>
     );
